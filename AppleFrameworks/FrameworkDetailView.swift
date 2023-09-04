@@ -2,16 +2,14 @@ import SwiftUI
 
 struct FrameworkDetailView : View {
     
-    var framework : Framework
-    @Binding var isShowingDeatailView : Bool
-    @State private var isShowingSafariView = false
+    @ObservedObject var viewModel : FrameworkDetailViewModel
     var body: some View {
         VStack {
             
             HStack {
                 Spacer()
                 Button {
-                    isShowingDeatailView = false
+                    viewModel.isShowingDetailView.wrappedValue = false
                 } label: {
                     Image(systemName: "xmark")
                         .foregroundColor(Color(.label))
@@ -22,34 +20,36 @@ struct FrameworkDetailView : View {
             .padding()
             
             Spacer()
-            FrameWorkTitleView(framework: framework)
-            Text(framework.description)
+            FrameWorkTitleView(framework:  viewModel.framework)
+            Text( viewModel.framework.description)
                 .font(.body)
                 .padding()
             
             Spacer()
             
-            Button {
-                isShowingSafariView = true
-            } label: {
-                Text("Learn More")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .frame(width: 280, height: 50)
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+            Link(destination: URL(string:  viewModel.framework.urlString)!) {
+                Button {
+                     viewModel.isShowingSafariView = true
+                 } label: {
+                     Text("Learn More")
+                         .font(.title2)
+                         .fontWeight(.semibold)
+                         .frame(width: 280, height: 50)
+                         .background(Color.red)
+                         .foregroundColor(.white)
+                         .cornerRadius(10)
+                 }
             }
         }
-        .sheet(isPresented: $isShowingSafariView) {
-            SafariView(url: URL(string: framework.urlString)!)
-        }
+        // .sheet(isPresented: $viewModel.isShowingSafariView) {
+        //    SafariView(url: URL(string:  viewModel.framework.urlString)!)
+       //  }
     }
 }
 
 struct FrameworkDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        FrameworkDetailView(framework: MockData.sampleFramework, isShowingDeatailView: .constant(false))
+        FrameworkDetailView(viewModel: FrameworkDetailViewModel(framework: MockData.sampleFramework, isShowingDetailView: .constant(false)))
             .preferredColorScheme(.dark)
     }
 }
