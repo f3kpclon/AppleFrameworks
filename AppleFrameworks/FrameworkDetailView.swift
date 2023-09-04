@@ -28,18 +28,28 @@ struct FrameworkDetailView : View {
             Spacer()
             
             Link(destination: URL(string:  viewModel.framework.urlString)!) {
-                Button {
-                     viewModel.isShowingSafariView = true
-                 } label: {
-                     Text("Learn More")
-                         .font(.title2)
-                         .fontWeight(.semibold)
-                         .frame(width: 280, height: 50)
-                         .background(Color.red)
-                         .foregroundColor(.white)
-                         .cornerRadius(10)
-                 }
+                Label {
+                    Text("Learn More")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .frame(width: 280, height: 50)
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                } icon: {}
             }
+           /* Button {
+                viewModel.isShowingSafariView = true
+            } label: {
+                Text("Learn More")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .frame(width: 280, height: 50)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            */
         }
         // .sheet(isPresented: $viewModel.isShowingSafariView) {
         //    SafariView(url: URL(string:  viewModel.framework.urlString)!)
